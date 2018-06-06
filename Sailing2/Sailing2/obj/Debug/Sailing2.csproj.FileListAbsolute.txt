@@ -1,0 +1,7 @@
+C:\Users\Luke\source\repos\Sailing2\Sailing2\bin\Debug\Sailing2.exe.config
+C:\Users\Luke\source\repos\Sailing2\Sailing2\bin\Debug\Sailing2.exe
+C:\Users\Luke\source\repos\Sailing2\Sailing2\bin\Debug\Sailing2.pdb
+C:\Users\Luke\source\repos\Sailing2\Sailing2\obj\Debug\Sailing2.csprojAssemblyReference.cache
+C:\Users\Luke\source\repos\Sailing2\Sailing2\obj\Debug\Sailing2.csproj.CoreCompileInputs.cache
+C:\Users\Luke\source\repos\Sailing2\Sailing2\obj\Debug\Sailing2.exe
+C:\Users\Luke\source\repos\Sailing2\Sailing2\obj\Debug\Sailing2.pdb
