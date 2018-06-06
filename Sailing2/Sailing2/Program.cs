@@ -54,13 +54,13 @@ namespace Sailing
             reader.Close();
             return raceDictionary;
         }
-        ///public static Dictionary<string, Boats> LoadFullFile()
-        public static string LoadFullFile()
+        public static Dictionary<string, Boats> LoadFullFile()
+        //public static string LoadFullFile()
         {
             StreamReader reader = System.IO.File.OpenText(@"c:\temp\Full List.txt");
             string line;
             Dictionary<int, BoatsFromExcel> BoatDictionaryInterim = new Dictionary<int, BoatsFromExcel>();
-            Dictionary<int, Boats> BoatDictionary = new Dictionary<int, Boats>();
+            Dictionary<string, Boats> BoatDictionary = new Dictionary<string, Boats>();
 
             int count1 = 0;
             while ((line = reader.ReadLine()) != null)
@@ -78,27 +78,86 @@ namespace Sailing
 
 
             }
-            int i = 0;
             List<string> keys = new List<string>();
-            foreach (KeyValuePair<int, BoatsFromExcel> Boat in BoatDictionaryInterim)
-            {
-                keys.Add(BoatDictionaryInterim[i].boat);
-                i++;
-            }
+
             int m = 0;
             foreach (KeyValuePair<int, BoatsFromExcel> Boat in BoatDictionaryInterim)
             {
-                if (keys.Contains(BoatDictionaryInterim[m].name));
+                if (keys.Contains(BoatDictionaryInterim[m].name))
                 {
-                    if 
+                    if (BoatDictionary[BoatDictionaryInterim[m].name].boat2 == null)
+                    {
+                        Boats boat1 = new Boats(BoatDictionaryInterim[m].name,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat1,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber1,
+                        BoatDictionaryInterim[m].boat,
+                        BoatDictionaryInterim[m].boatNumber);
+                        BoatDictionary.Remove(BoatDictionaryInterim[m].name);
+                        BoatDictionary.Add(boat1.name, boat1);
+                    }
+                    else if (BoatDictionary[BoatDictionaryInterim[m].name].boat3 == null)
+                    {
+
+                        Boats boat1 = new Boats(BoatDictionaryInterim[m].name,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat1,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber1,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat2,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber2,
+                        BoatDictionaryInterim[m].boat,
+                        BoatDictionaryInterim[m].boatNumber);
+                        BoatDictionary.Remove(BoatDictionaryInterim[m].name);
+                        BoatDictionary.Add(boat1.name, boat1);
+                    }
+                    else if (BoatDictionary[BoatDictionaryInterim[m].name].boat4 == null)
+                    {
+                        Boats boat1 = new Boats(BoatDictionaryInterim[m].name,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat1,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber1,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat2,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber2,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat3,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber3,
+                        BoatDictionaryInterim[m].boat,
+                        BoatDictionaryInterim[m].boatNumber);
+                        BoatDictionary.Remove(BoatDictionaryInterim[m].name);
+                        BoatDictionary.Add(boat1.name, boat1);
+                    }
+                    else if (BoatDictionary[BoatDictionaryInterim[m].name].boat5 == null)
+                    {
+                        Boats boat1 = new Boats(BoatDictionaryInterim[m].name,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat1,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber1,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat2,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber2,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat3,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber3,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boat4,
+                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber4,
+                        BoatDictionaryInterim[m].boat,
+                        BoatDictionaryInterim[m].boatNumber);
+                        BoatDictionary.Remove(BoatDictionaryInterim[m].name);
+                        BoatDictionary.Add(boat1.name, boat1);
+                    }
+
+
+                    else
+                    {
+                        Boats boat3 = new Boats(BoatDictionaryInterim[m].name,
+                        BoatDictionaryInterim[m].boat,
+                        BoatDictionaryInterim[m].boatNumber);
+                        BoatDictionary.Add(boat3.name, boat3);
+                        keys.Add(BoatDictionaryInterim[m].name);
+                    }
+                    m++;
 
                 }
-                m++;
-            }
 
-            
+
+
+
+            }
             reader.Close();
-            return "hi"; 
+            return BoatDictionary;
         }
 
 
@@ -114,8 +173,8 @@ namespace Sailing
             Dictionary<string, BoatsRacing> raceDictionary = new Dictionary<string, BoatsRacing>();
             //boatDictionary.Add("hi", boat1);
 
-            //boatDictionary = LoadFullFile();
-            string hi = LoadFullFile();
+            boatDictionary = LoadFullFile();
+            //string hi = LoadFullFile();
             //Console.WriteLine(boatDictionary["Abc"].name);
             //boatDictionary.Add(boat1.name, boat1);
             //boatDictionary.Add(boat2.name, boat2);
@@ -170,8 +229,8 @@ namespace Sailing
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    //boatDictionary = LoadFullFile();
-                                    string hi1 = LoadFullFile();
+                                    boatDictionary = LoadFullFile();
+                                    //string hi1 = LoadFullFile();
                                     Console.Clear();
                                 }
 
@@ -300,8 +359,8 @@ namespace Sailing
                     }
                 }
                 //Dictionary<string, Boats> nothing = new Dictionary<string, Boats>();
-                //boatDictionary = LoadFullFile(nothing);
-                string hi2 = LoadFullFile();
+                boatDictionary = LoadFullFile();
+                //string hi2 = LoadFullFile();
                 Console.Clear();
             }
 
@@ -340,20 +399,20 @@ namespace Sailing
         public string boat5 { get; set; }
         public int boatNumber5 { get; set; }
 
-        public Boats(string Name, int NoOfBoats, string Boat1, int BoatNumber1)
+        public Boats(string Name, string Boat1, int BoatNumber1)
         {
             name = Name;
-            noOfBoats = NoOfBoats;
+            noOfBoats = 1;
             boat1 = Boat1;
             boatNumber1 = BoatNumber1;
 
 
         }
-        public Boats(string Name, int NoOfBoats, string Boat1, int BoatNumber1, string Boat2,
+        public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
         int BoatNumber2)
         {
             name = Name;
-            noOfBoats = NoOfBoats;
+            noOfBoats = 2;
             boat1 = Boat1;
             boatNumber1 = BoatNumber1;
             boat2 = Boat2;
@@ -362,11 +421,11 @@ namespace Sailing
 
 
         }
-        public Boats(string Name, int NoOfBoats, string Boat1, int BoatNumber1, string Boat2,
+        public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
         int BoatNumber2, string Boat3, int BoatNumber3)
         {
             name = Name;
-            noOfBoats = NoOfBoats;
+            noOfBoats = 3;
             boat1 = Boat1;
             boatNumber1 = BoatNumber1;
             boat2 = Boat2;
@@ -376,11 +435,11 @@ namespace Sailing
 
 
         }
-        public Boats(string Name, int NoOfBoats, string Boat1, int BoatNumber1, string Boat2,
+        public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
         int BoatNumber2, string Boat3, int BoatNumber3, string Boat4, int BoatNumber4)
         {
             name = Name;
-            noOfBoats = NoOfBoats;
+            noOfBoats = 4;
             boat1 = Boat1;
             boatNumber1 = BoatNumber1;
             boat2 = Boat2;
@@ -392,12 +451,12 @@ namespace Sailing
 
 
         }
-        public Boats(string Name, int NoOfBoats, string Boat1, int BoatNumber1, string Boat2,
+        public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
         int BoatNumber2, string Boat3, int BoatNumber3, string Boat4, int BoatNumber4,
         string Boat5, int BoatNumber5)
         {
             name = Name;
-            noOfBoats = NoOfBoats;
+            noOfBoats = 5;
             boat1 = Boat1;
             boatNumber1 = BoatNumber1;
             boat2 = Boat2;
