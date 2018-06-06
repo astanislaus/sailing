@@ -60,6 +60,7 @@ namespace Sailing
             StreamReader reader = System.IO.File.OpenText(@"c:\temp\Full List.txt");
             string line;
             Dictionary<int, BoatsFromExcel> BoatDictionaryInterim = new Dictionary<int, BoatsFromExcel>();
+            Dictionary<int, Boats> BoatDictionary = new Dictionary<int, Boats>();
 
             int count1 = 0;
             while ((line = reader.ReadLine()) != null)
@@ -78,11 +79,23 @@ namespace Sailing
 
             }
             int i = 0;
+            List<string> keys = new List<string>();
             foreach (KeyValuePair<int, BoatsFromExcel> Boat in BoatDictionaryInterim)
             {
-                Console.WriteLine(BoatDictionaryInterim[i].boat);
+                keys.Add(BoatDictionaryInterim[i].boat);
                 i++;
             }
+            int m = 0;
+            foreach (KeyValuePair<int, BoatsFromExcel> Boat in BoatDictionaryInterim)
+            {
+                if (keys.Contains(BoatDictionaryInterim[m].name));
+                {
+                    if 
+
+                }
+                m++;
+            }
+
             
             reader.Close();
             return "hi"; 
