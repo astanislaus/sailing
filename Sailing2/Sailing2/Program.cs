@@ -54,7 +54,8 @@ namespace Sailing
             reader.Close();
             return raceDictionary;
         }
-        public static Dictionary<string, Boats> LoadFullFile(Dictionary<string, Boats> boatDictionary)
+        ///public static Dictionary<string, Boats> LoadFullFile()
+        public static string LoadFullFile()
         {
             StreamReader reader = System.IO.File.OpenText(@"c:\temp\Full List.txt");
             string line;
@@ -75,253 +76,16 @@ namespace Sailing
                 }
 
 
-
-
             }
-            //Turn BoatsFromExcel type to Boats:
-            List<string> names = new List<string>();
-            for (int b = 0; b < count1; b++)
-            {
-                names.Add(BoatDictionaryInterim[b].name);
-            }
-
-            int distinctCount = names.Distinct().Count();
-
             int i = 0;
-            try
+            foreach (KeyValuePair<int, BoatsFromExcel> Boat in BoatDictionaryInterim)
             {
-                while (i < names.Count())
-                {
-                    int noOfBoats = 0;
-
-                    if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name) &&
-            string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 2].name) &&
-            string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 3].name) &&
-            string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 4].name))
-                    {
-                        noOfBoats += 5;
-                        for (int b = 0; b < noOfBoats; b++)
-                        {
-                            Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat, BoatDictionaryInterim[i].boatNumber);
-                            boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-                        }
-                    }
-                    else if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name) &&
-    string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 2].name) &&
-    string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 3].name))
-                    {
-                        noOfBoats += 4;
-                        for (int b = 0; b < noOfBoats; b++)
-                        {
-                            Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat, BoatDictionaryInterim[i].boatNumber);
-                            boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-                        }
-                    }
-                    else if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name) &&
-    string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 2].name))
-                    {
-                        noOfBoats += 3;
-
-                        Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat,
-                            BoatDictionaryInterim[i].boatNumber, BoatDictionaryInterim[i + 1].boat,
-                            BoatDictionaryInterim[i + 1].boatNumber, BoatDictionaryInterim[i + 2].boat,
-                            BoatDictionaryInterim[i + 2].boatNumber);
-                        boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                    }
-                    else if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name))
-                    {
-                        noOfBoats += 2;
-
-                        Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat,
-                            BoatDictionaryInterim[i].boatNumber, BoatDictionaryInterim[i + 1].boat,
-                            BoatDictionaryInterim[i + 1].boatNumber);
-                        boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                    }
-                    else
-                    {
-                        noOfBoats++;
-
-                        Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat, BoatDictionaryInterim[i].boatNumber);
-                        boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                    }
-
-                    i += noOfBoats;
-
-
-
-
-                }
+                Console.WriteLine(BoatDictionaryInterim[i].boat);
+                i++;
             }
-            catch
-            {
-                try
-                {
-                    while (i < names.Count())
-                    {
-                        int noOfBoats = 0;
-
-                        if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name) &&
-       string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 2].name) &&
-       string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 3].name))
-                        {
-                            noOfBoats += 4;
-                            for (int b = 0; b < noOfBoats; b++)
-                            {
-                                Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat, BoatDictionaryInterim[i].boatNumber);
-                                boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-                            }
-                        }
-                        else if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name) &&
-        string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 2].name))
-                        {
-                            noOfBoats += 3;
-
-                            Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat,
-                                BoatDictionaryInterim[i].boatNumber, BoatDictionaryInterim[i + 1].boat,
-                                BoatDictionaryInterim[i + 1].boatNumber, BoatDictionaryInterim[i + 2].boat,
-                                BoatDictionaryInterim[i + 2].boatNumber);
-                            boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                        }
-                        else if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name))
-                        {
-                            noOfBoats += 2;
-
-                            Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat,
-                                BoatDictionaryInterim[i].boatNumber, BoatDictionaryInterim[i + 1].boat,
-                                BoatDictionaryInterim[i + 1].boatNumber);
-                            boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                        }
-                        else
-                        {
-                            noOfBoats++;
-
-                            Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat, BoatDictionaryInterim[i].boatNumber);
-                            boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                        }
-
-                        i += noOfBoats;
-
-
-
-
-                    }
-                }
-                catch
-                {
-                    try
-                    {
-                        while (i < names.Count())
-                        {
-                            int noOfBoats = 0;
-
-                            if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name) &&
-            string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 2].name))
-                            {
-                                noOfBoats += 3;
-
-                                Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat,
-                                    BoatDictionaryInterim[i].boatNumber, BoatDictionaryInterim[i + 1].boat,
-                                    BoatDictionaryInterim[i + 1].boatNumber, BoatDictionaryInterim[i + 2].boat,
-                                    BoatDictionaryInterim[i + 2].boatNumber);
-                                boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                            }
-                            else if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name))
-                            {
-                                noOfBoats += 2;
-
-                                Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat,
-                                    BoatDictionaryInterim[i].boatNumber, BoatDictionaryInterim[i + 1].boat,
-                                    BoatDictionaryInterim[i + 1].boatNumber);
-                                boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                            }
-                            else
-                            {
-                                noOfBoats++;
-
-                                Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat, BoatDictionaryInterim[i].boatNumber);
-                                boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                            }
-
-                            i += noOfBoats;
-
-
-
-
-                        }
-                    }
-                    catch
-                    {
-                        try
-                        {
-                            while (i < names.Count())
-                            {
-                                int noOfBoats = 0;
-
-                                if (string.Equals(BoatDictionaryInterim[i].name, BoatDictionaryInterim[i + 1].name))
-                                {
-                                    noOfBoats += 2;
-
-                                    Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat,
-                                        BoatDictionaryInterim[i].boatNumber, BoatDictionaryInterim[i + 1].boat,
-                                        BoatDictionaryInterim[i + 1].boatNumber);
-                                    boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                                }
-                                else
-                                {
-                                    noOfBoats++;
-
-                                    Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat, BoatDictionaryInterim[i].boatNumber);
-                                    boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-                                }
-
-                                i += noOfBoats;
-
-
-
-
-                            }
-                        }
-                        catch
-                        {
-                            while (i < names.Count())
-                            {
-                                int noOfBoats = 0;
-
-                                noOfBoats++;
-
-                                Boats boat1 = new Boats(BoatDictionaryInterim[i].name, noOfBoats, BoatDictionaryInterim[i].boat, BoatDictionaryInterim[i].boatNumber);
-                                boatDictionary.Add(BoatDictionaryInterim[i].name, boat1);
-
-
-
-                                i += noOfBoats;
-
-
-
-
-                            }
-                        }
-                    }
-
-
-
-
-
-                }
-            }
+            
             reader.Close();
-            return boatDictionary;
+            return "hi"; 
         }
 
 
@@ -337,7 +101,8 @@ namespace Sailing
             Dictionary<string, BoatsRacing> raceDictionary = new Dictionary<string, BoatsRacing>();
             //boatDictionary.Add("hi", boat1);
 
-            boatDictionary = LoadFullFile(boatDictionary);
+            //boatDictionary = LoadFullFile();
+            string hi = LoadFullFile();
             //Console.WriteLine(boatDictionary["Abc"].name);
             //boatDictionary.Add(boat1.name, boat1);
             //boatDictionary.Add(boat2.name, boat2);
@@ -391,8 +156,9 @@ namespace Sailing
                                         file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
-                                    Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile(nothing1);
+                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
+                                    //boatDictionary = LoadFullFile();
+                                    string hi1 = LoadFullFile();
                                     Console.Clear();
                                 }
 
@@ -520,8 +286,9 @@ namespace Sailing
                         }
                     }
                 }
-                Dictionary<string, Boats> nothing = new Dictionary<string, Boats>();
-                boatDictionary = LoadFullFile(nothing);
+                //Dictionary<string, Boats> nothing = new Dictionary<string, Boats>();
+                //boatDictionary = LoadFullFile(nothing);
+                string hi2 = LoadFullFile();
                 Console.Clear();
             }
 
