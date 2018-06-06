@@ -11,9 +11,9 @@ namespace Sailing
 
     class Program
     {
-
+//C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\Program.cs
         /*
-        public static void Main2()
+        public static void Main2( )
         {
             string path = @"c:\temp\MyTest.txt";
             if (!File.Exists(path))
