@@ -11,33 +11,6 @@ namespace Sailing
 
     class Program
     {
-//C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\Program.cs
-        /*
-        public static void Main2( )
-        {
-            string path = @"c:\temp\MyTest.txt";
-            if (!File.Exists(path))
-            {
-                // Create a file to write to.
-                using (StreamWriter sw = File.CreateText(path))
-                {
-                    sw.WriteLine("Hello");
-                    sw.WriteLine("And");
-                    sw.WriteLine("Welcome");
-                }
-            }
-
-            // Open the file to read from.
-            using (StreamReader sr = File.OpenText(path))
-            {
-                string s = "";
-                while ((s = sr.ReadLine()) != null)
-                {
-                    Console.WriteLine(s);
-                }
-            }
-        }
-        */
         public static BoatsRacing converter1(Boats boat)
         {
             BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat1, boat.boatNumber1);
@@ -63,11 +36,6 @@ namespace Sailing
             BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat5, boat.boatNumber5);
             return racer1;
         }
-        // public static Boats Exceltoc(BoatsFromExcel boat)
-        //   {
-
-        //   return Boats;
-        // }
         public static Dictionary<string, BoatsRacing> loadRaceFile(Dictionary<string, BoatsRacing> raceDictionary)
         {
             StreamReader reader = System.IO.File.OpenText(@"c:\temp\Race List.txt");
@@ -81,7 +49,6 @@ namespace Sailing
 
                 raceDictionary.Add(items[0], boat1);
 
-                //int myInteger = int.Parse(items[1]);
 
             }
             reader.Close();
@@ -92,54 +59,27 @@ namespace Sailing
             StreamReader reader = System.IO.File.OpenText(@"c:\temp\Full List.txt");
             string line;
             Dictionary<int, BoatsFromExcel> BoatDictionaryInterim = new Dictionary<int, BoatsFromExcel>();
-            //BoatsFromExcel hi = new BoatsFromExcel("hi", 12, "ho");
-            //BoatDictionaryInterim.Add("hi", hi);
+
             int count1 = 0;
             while ((line = reader.ReadLine()) != null)
 
             {
-                //Dictionary<string, BoatsFromExcel> BoatDictionaryInterim = new Dictionary<string, BoatsFromExcel>();
-
                 string[] items = line.Split(char.Parse("\n"));
-                //Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}",
-                //    items[0], items[1], items[2], items[3], items[4], items[5], items[6],
-                //    items[7], items[8], items[9], items[10], items[11]);
-                //Boats boat1 = new Boats(items[0], int.Parse(items[1]), items[2], int.Parse(items[3]), items[4],
-                //int.Parse(items[5]), items[6], int.Parse(items[7]), items[8], int.Parse(items[9]),
-                //items[10], int.Parse(items[11]));
+
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] items1 = line.Split('\t');
-                    //Console.WriteLine("{0}, {1}, {2}", items1[0], int.Parse(items1[1]), items1[2]);
                     BoatsFromExcel boat1 = new BoatsFromExcel(items1[0], int.Parse(items1[1]), items1[2]);
                     BoatDictionaryInterim.Add(count1, boat1);
                     count1++;
-                    // Now let's find the path.
-                    /*
-                    foreach (string item in items1)
-                    {
-                        if (!string.IsNullOrWhiteSpace(item))
-                        {
-                            string path = item;
-                            
-                        }
-                      count++;
-                    }
-                    */
-
-                    // At this point, `myInteger` and `path` contain the values we want
-                    // for the current line. 
                 }
 
 
-                //BoatDictionaryInterim.Add("hi", hi);
-                //int myInteger = int.Parse(items[1]);
 
 
             }
             //Turn BoatsFromExcel type to Boats:
             List<string> names = new List<string>();
-            //while ((BoatDictionaryInterim[count] != null))
             for (int b = 0; b < count1; b++)
             {
                 names.Add(BoatDictionaryInterim[b].name);
