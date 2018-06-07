@@ -10,13 +10,21 @@ namespace Sailing
 {
 
     class Program
-    {
-        /*
+    { 
+        
         public static Dictionary<string, Boats> LoadFullExcel(string path)
         {
+        var fileName = string.Format("WFSC_DATA(3).xslx", Directory.GetCurrentDirectory());
+        var connectionString = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; data source={0}; Extended Properties=Excel 8.0;", fileName);
 
+        var adapter = new OleDbDataAdapter("SELECT * FROM [workSheetNameHere$]", connectionString);
+        var ds = new DataSet();
+
+        adapter.Fill(ds, "anyNameHere");
+        
+        DataTable data = ds.Tables["anyNameHere"];
         }
-        */
+        
         public static BoatsRacing converter1(Boats boat)
         {
             BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat1, boat.boatNumber1);
