@@ -54,10 +54,10 @@ namespace Sailing
             reader.Close();
             return raceDictionary;
         }
-        public static Dictionary<string, Boats> LoadFullFile()
+        public static Dictionary<string, Boats> LoadFullFile(string path)
         //public static string LoadFullFile()
         {
-            StreamReader reader = System.IO.File.OpenText(@"c:\temp\Full List.txt");
+            StreamReader reader = System.IO.File.OpenText(@path+@"\Full List.txt");
             string line;
             Dictionary<int, BoatsFromExcel> BoatDictionaryInterim = new Dictionary<int, BoatsFromExcel>();
             Dictionary<string, Boats> BoatDictionary = new Dictionary<string, Boats>();
@@ -172,15 +172,15 @@ namespace Sailing
             Dictionary<string, Boats> boatDictionary = new Dictionary<string, Boats>();
             Dictionary<string, BoatsRacing> raceDictionary = new Dictionary<string, BoatsRacing>();
             //boatDictionary.Add("hi", boat1);
-
-            boatDictionary = LoadFullFile();
+            Console.WriteLine("Enter path to folder of files");
+            string path = Console.ReadLine();
+            boatDictionary = LoadFullFile(path);
             //Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
             //string hi = LoadFullFile();
             //Console.WriteLine(boatDictionary["Abc"].name);
             //boatDictionary.Add(boat1.name, boat1);
             //boatDictionary.Add(boat2.name, boat2);
             //boatDictionary.Add(boat3.name, boat3);
-            string path = @"c:\temp\Race List.txt";
 
 
             while (true)
@@ -204,7 +204,7 @@ namespace Sailing
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
-                                using (StreamWriter sw = System.IO.File.AppendText(path))
+                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
                                 {
                                     sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
                                         raceDictionary[person].boatName,
@@ -230,7 +230,7 @@ namespace Sailing
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile();
+                                    boatDictionary = LoadFullFile(path);
                                     //string hi1 = LoadFullFile();
                                     Console.Clear();
                                 }
@@ -252,7 +252,7 @@ namespace Sailing
                                 Console.WriteLine(thing);
 
 
-                                using (StreamWriter sw = System.IO.File.AppendText(path))
+                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
                                 {
 
                                     sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
@@ -273,13 +273,13 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
                                         file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile();
+                                    boatDictionary = LoadFullFile(path);
                                     //string hi1 = LoadFullFile();
                                     Console.Clear();
                                 }
@@ -296,7 +296,7 @@ namespace Sailing
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
-                                using (StreamWriter sw = System.IO.File.AppendText(path))
+                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
                                 {
                                     sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
                                         raceDictionary[person].boatName,
@@ -322,7 +322,7 @@ namespace Sailing
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile();
+                                    boatDictionary = LoadFullFile(path);
                                     //string hi1 = LoadFullFile();
                                     Console.Clear();
                                 }
@@ -339,7 +339,7 @@ namespace Sailing
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
-                                using (StreamWriter sw = System.IO.File.AppendText(path))
+                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
                                 {
                                     sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
                                         raceDictionary[person].boatName,
@@ -365,7 +365,7 @@ namespace Sailing
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile();
+                                    boatDictionary = LoadFullFile(path);
                                     //string hi1 = LoadFullFile();
                                     Console.Clear();
                                 }
@@ -383,7 +383,7 @@ namespace Sailing
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
-                                using (StreamWriter sw = System.IO.File.AppendText(path))
+                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
                                 {
                                     sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
                                         raceDictionary[person].boatName,
@@ -410,7 +410,7 @@ namespace Sailing
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile();
+                                    boatDictionary = LoadFullFile(path);
                                     //string hi1 = LoadFullFile();
                                     Console.Clear();
                                 }
@@ -452,7 +452,7 @@ namespace Sailing
                     }
                 }
                 //Dictionary<string, Boats> nothing = new Dictionary<string, Boats>();
-                boatDictionary = LoadFullFile();
+                boatDictionary = LoadFullFile(path);
                 //string hi2 = LoadFullFile();
                 Console.Clear();
             }
