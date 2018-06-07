@@ -139,18 +139,18 @@ namespace Sailing
                         BoatDictionary.Add(boat1.name, boat1);
                     }
 
-
-                    else
-                    {
-                        Boats boat3 = new Boats(BoatDictionaryInterim[m].name,
-                        BoatDictionaryInterim[m].boat,
-                        BoatDictionaryInterim[m].boatNumber);
-                        BoatDictionary.Add(boat3.name, boat3);
-                        keys.Add(BoatDictionaryInterim[m].name);
-                    }
+                }
+                else
+                {
+                    Boats boat3 = new Boats(BoatDictionaryInterim[m].name,
+                    BoatDictionaryInterim[m].boat,
+                    BoatDictionaryInterim[m].boatNumber);
+                    BoatDictionary.Add(boat3.name, boat3);
+                    keys.Add(BoatDictionaryInterim[m].name);
+                }
                     m++;
 
-                }
+                
 
 
 
@@ -174,6 +174,7 @@ namespace Sailing
             //boatDictionary.Add("hi", boat1);
 
             boatDictionary = LoadFullFile();
+            Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
             //string hi = LoadFullFile();
             //Console.WriteLine(boatDictionary["Abc"].name);
             //boatDictionary.Add(boat1.name, boat1);
@@ -212,7 +213,7 @@ namespace Sailing
                                 break;
 
                             }
-                            if (boatDictionary[person].noOfBoats == 1)
+                            else if (boatDictionary[person].noOfBoats == 1)
                             {
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
@@ -261,6 +262,29 @@ namespace Sailing
                                 break;
 
                             }
+                            else if (boatDictionary[person].noOfBoats == 2)
+                            {
+                                Console.WriteLine("Would you like to add a boat? y/n");
+                                response = Console.ReadLine();
+                                if (response == "y")
+                                {
+                                    Console.WriteLine("Enter the name of the boat");
+                                    string boat = Console.ReadLine();
+                                    Console.Write("Enter the boat number of the boat ");
+                                    int boatNumber = int.Parse(Console.ReadLine());
+                                    using (StreamWriter file =
+            new StreamWriter(@"c:\temp\Full List.txt", true))
+                                    {
+                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+
+                                    }
+                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
+                                    boatDictionary = LoadFullFile();
+                                    //string hi1 = LoadFullFile();
+                                    Console.Clear();
+                                }
+
+                            }
                         }
                         if (boatDictionary[person].noOfBoats > 2)
                         {
@@ -281,6 +305,29 @@ namespace Sailing
                                 break;
 
                             }
+                            else if (boatDictionary[person].noOfBoats == 3)
+                            {
+                                Console.WriteLine("Would you like to add a boat? y/n");
+                                response = Console.ReadLine();
+                                if (response == "y")
+                                {
+                                    Console.WriteLine("Enter the name of the boat");
+                                    string boat = Console.ReadLine();
+                                    Console.Write("Enter the boat number of the boat ");
+                                    int boatNumber = int.Parse(Console.ReadLine());
+                                    using (StreamWriter file =
+            new StreamWriter(@"c:\temp\Full List.txt", true))
+                                    {
+                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+
+                                    }
+                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
+                                    boatDictionary = LoadFullFile();
+                                    //string hi1 = LoadFullFile();
+                                    Console.Clear();
+                                }
+
+                            }
                         }
                         if (boatDictionary[person].noOfBoats > 3)
                         {
@@ -299,6 +346,29 @@ namespace Sailing
                                         raceDictionary[person].boatNumber);
                                 }
                                 break;
+
+                            }
+                            else if (boatDictionary[person].noOfBoats == 4)
+                            {
+                                Console.WriteLine("Would you like to add a boat? y/n");
+                                response = Console.ReadLine();
+                                if (response == "y")
+                                {
+                                    Console.WriteLine("Enter the name of the boat");
+                                    string boat = Console.ReadLine();
+                                    Console.Write("Enter the boat number of the boat ");
+                                    int boatNumber = int.Parse(Console.ReadLine());
+                                    using (StreamWriter file =
+            new StreamWriter(@"c:\temp\Full List.txt", true))
+                                    {
+                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+
+                                    }
+                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
+                                    boatDictionary = LoadFullFile();
+                                    //string hi1 = LoadFullFile();
+                                    Console.Clear();
+                                }
 
                             }
 
@@ -323,16 +393,39 @@ namespace Sailing
 
 
                             }
+                            else if (boatDictionary[person].noOfBoats == 5)
+                            {
+                                Console.WriteLine("Would you like to add a boat? y/n");
+                                response = Console.ReadLine();
+                                if (response == "y")
+                                {
+                                    Console.WriteLine("Enter the name of the boat");
+                                    string boat = Console.ReadLine();
+                                    Console.Write("Enter the boat number of the boat ");
+                                    int boatNumber = int.Parse(Console.ReadLine());
+                                    using (StreamWriter file =
+            new StreamWriter(@"c:\temp\Full List.txt", true))
+                                    {
+                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+
+                                    }
+                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
+                                    boatDictionary = LoadFullFile();
+                                    //string hi1 = LoadFullFile();
+                                    Console.Clear();
+                                }
+
+                            }
 
                         }
                         Console.Clear();
                     }
                 }
 
-                catch
+                catch (KeyNotFoundException)
                 {
 
-                    Console.WriteLine("me is not in my records, would you like to add it?(y/n)");
+                    Console.WriteLine("Your name, "+ person +", is not in my records, would you like to add it?(y/n)");
                     string response = Console.ReadLine();
                     if (string.Equals(response, "y"))
                     {
