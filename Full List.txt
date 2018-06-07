@@ -61,3 +61,5 @@ Test Name	10242	Testboatname
 testname2	523432	boatname2
 testname3	13525	testboat3
 Adrian Stanislaus	35435	Otherboat
+Luke Stanislaus	1231	Tesla Boat
+Luke Stanislaus	1	new boat

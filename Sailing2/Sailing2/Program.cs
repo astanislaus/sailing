@@ -11,6 +11,12 @@ namespace Sailing
 
     class Program
     {
+        /*
+        public static Dictionary<string, Boats> LoadFullExcel(string path)
+        {
+
+        }
+        */
         public static BoatsRacing converter1(Boats boat)
         {
             BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat1, boat.boatNumber1);
@@ -215,6 +221,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 1)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -224,7 +231,7 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
                                         file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
 
@@ -264,6 +271,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 2)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -275,7 +283,7 @@ namespace Sailing
                                     using (StreamWriter file =
             new StreamWriter(@path + @"\Full List.txt", true))
                                     {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
@@ -307,6 +315,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 3)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -316,9 +325,9 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
@@ -350,6 +359,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 4)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -359,9 +369,9 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
@@ -395,6 +405,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 5)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -404,9 +415,9 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
