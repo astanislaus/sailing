@@ -12,3 +12,8 @@ C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\obj\Debug\Sailing2
 C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\bin\Debug\Sailing2.exe.config
 C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\bin\Debug\Sailing2.exe
 C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\bin\Debug\Sailing2.pdb
+C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\bin\Debug\ExcelDataReader.DataSet.dll
+C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\bin\Debug\ExcelDataReader.dll
+C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\bin\Debug\ExcelDataReader.xml
+C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\bin\Debug\ExcelDataReader.DataSet.xml
+C:\Users\Luke\Documents\GitHub\test-sailing\Sailing2\Sailing2\obj\Debug\Sailing2.csproj.CopyComplete

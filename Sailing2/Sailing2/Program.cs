@@ -5,6 +5,8 @@ using System.Security;
 using Microsoft;
 using System.Windows.Input;
 using System.Linq;
+using System.Data;
+using ExcelDataReader;
 
 namespace Sailing
 {
@@ -12,17 +14,59 @@ namespace Sailing
     class Program
     { 
         
-        public static Dictionary<string, Boats> LoadFullExcel(string path)
+        //public static Dictionary<string, Boats> LoadFullExcel(string path)
+        public static void LoadFullExcel(string path)
         {
-        var fileName = string.Format("WFSC_DATA(3).xslx", Directory.GetCurrentDirectory());
-        var connectionString = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; data source={0}; Extended Properties=Excel 8.0;", fileName);
+            using (var stream = File.Open(@path + @"\WFSC_DATA (3).xlsx", FileMode.Open, FileAccess.Read))
+            {
 
-        var adapter = new OleDbDataAdapter("SELECT * FROM [workSheetNameHere$]", connectionString);
-        var ds = new DataSet();
+                // Auto-detect format, supports:
+                //  - Binary Excel files (2.0-2003 format; *.xls)
+                //  - OpenXml Excel files (2007 format; *.xlsx)
+                /*
+                using (StreamWriter file =
+new StreamWriter(@path + @"\Full List.txt", true))
+                {
 
-        adapter.Fill(ds, "anyNameHere");
-        
-        DataTable data = ds.Tables["anyNameHere"];
+                }
+                */
+
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                         //2. Use the AsDataSet extension method
+                        var result = reader.AsDataSet();
+                        DataTable table = new DataTable();
+                        Console.ReadLine();
+                        table = result.Tables[2];
+                        File.Delete(@path + @"\Full List.txt");
+                        //File.Create(@path + @"\Full List.txt");
+                        using (StreamWriter file =
+new StreamWriter(@path + @"\Full List.txt", true))
+                        {
+
+                            foreach (DataRow dr in table.Rows)
+                            {
+                                if (!dr["Column2"].ToString().Equals("") && !dr["Column2"].ToString().Equals("Class"))
+                                {
+
+
+                                file.WriteLine("{0}\t{1}\t{2}", dr["Column0"].ToString(),
+                                dr["Column1"].ToString(), dr["Column2"].ToString());
+                                    //Console.WriteLine(dr["Column2"].ToString());
+                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
+
+                                }
+                                //Console.WriteLine(table.Rows[2][1]);
+
+
+                                //DataRow hi =  new result.Tables[2].Rows[2];
+                                // The result of each spreadsheet is in result.Tables
+                            }
+                        file.Close();
+                        }
+                    }
+                
+            }
         }
         
         public static BoatsRacing converter1(Boats boat)
@@ -50,9 +94,9 @@ namespace Sailing
             BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat5, boat.boatNumber5);
             return racer1;
         }
-        public static Dictionary<string, BoatsRacing> loadRaceFile(Dictionary<string, BoatsRacing> raceDictionary)
+        public static Dictionary<string, BoatsRacing> loadRaceFile(Dictionary<string, BoatsRacing> raceDictionary, string path)
         {
-            StreamReader reader = System.IO.File.OpenText(@"c:\temp\Race List.txt");
+            StreamReader reader = System.IO.File.OpenText(@path + @"\Race List.txt");
             string line;
             while ((line = reader.ReadLine()) != null)
             {
@@ -188,6 +232,7 @@ namespace Sailing
             //boatDictionary.Add("hi", boat1);
             Console.WriteLine("Enter path to folder of files");
             string path = Console.ReadLine();
+            LoadFullExcel(path);
             boatDictionary = LoadFullFile(path);
             //Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
             //string hi = LoadFullFile();

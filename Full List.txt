@@ -1,4 +1,3 @@
-This is the Full list file
 A Robinson	4649	Feva XL
 A Robinson	137388	Radial
 Adrian Stanislaus	926	Laser Stratos
@@ -54,4 +53,4 @@ Steve Ashford	6811	Albacore
 Steve Marlow	113981	Laser
 Struan McDonald	258	Vareo
 W BURGESS	174465	Laser
-Wolly Merchant	12345	Q'ba
+Wolly Merchant	123456	Q ba
