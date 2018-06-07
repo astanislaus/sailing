@@ -174,7 +174,7 @@ namespace Sailing
             //boatDictionary.Add("hi", boat1);
 
             boatDictionary = LoadFullFile();
-            Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
+            //Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
             //string hi = LoadFullFile();
             //Console.WriteLine(boatDictionary["Abc"].name);
             //boatDictionary.Add(boat1.name, boat1);
