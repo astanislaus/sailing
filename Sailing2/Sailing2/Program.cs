@@ -14,10 +14,11 @@ namespace Sailing
 
     class Program
     { 
-        public static void ExcelWriteFile(string path, string name, string boat, int boatNumber)
+        //public static void ExcelWriteFile(string path, string name, string boat, int boatNumber)
+        public static void ExcelWriteFile(string path)
         {
-            File.Delete(path);
-            var connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + @"\Race List.txt" + ";Extended Properties=Excel 8.0";
+            File.Delete(@path + @"\test.xls");
+            var connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + @path + @"\test.xls" + ";Extended Properties=Excel 8.0";
             using (var excelConnection = new OleDbConnection(connectionString))
             {
                 // The excel file does not need to exist, opening the connection will create the
@@ -25,28 +26,33 @@ namespace Sailing
                 if (excelConnection.State != ConnectionState.Open) { excelConnection.Open(); }
 
                 // data is an object so it works with DBNull.Value
-                object propertyOneValue = "coolhgh!";
-                object propertyTwoValue = "testing";
+                object propertyOneValue = "Luke Stanislaus";
+                object propertyTwoValue = "Laser";
+                object BoatNumber = "162872";
 
-                var sqlText = "CREATE TABLE YourTableNameHere ([PropertyOne] VARCHAR(100), [PropertyTwo] VARCHAR(100))";
+                var sqlText = "CREATE TABLE Boatlistfull ([Name] VARCHAR(100), [Boat] VARCHAR(100), [BoatNumber] INT)";
+
+                //var sqlText = "CREATE TABLE Boatlistfull ([Name] VARCHAR(100), [Boat] VARCHAR(100), [BoatNumber] VARCHAR(100)";
 
                 // Executing this command will create the worksheet inside of the workbook
                 // the table name will be the new worksheet name
                 using (var command = new OleDbCommand(sqlText, excelConnection)) { command.ExecuteNonQuery(); }
 
                 // Add (insert) data to the worksheet
-                var commandText = $"Insert Into YourTableNameHere ([PropertyOne], [PropertyTwo]) Values (@PropertyOne, @PropertyTwo)";
+                var commandText = $"Insert Into Boatlistfull ([Name], [Boat], [BoatNumber]) Values (@PropertyOne, @PropertyTwo, @BoatNumber)";
 
                 using (var command = new OleDbCommand(commandText, excelConnection))
                 {
                     // We need to allow for nulls just like we would with
                     // sql, if your data is null a DBNull.Value should be used
                     // instead of null 
-                    command.Parameters.AddWithValue("@PropertyOne", propertyOneValue ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@PropertyTwo", propertyTwoValue ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Name", propertyOneValue ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Boat", propertyTwoValue ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@BoatNumber", BoatNumber ?? DBNull.Value);
 
                     command.ExecuteNonQuery();
                 }
+                
             }
         }
         //public static Dictionary<string, Boats> LoadFullExcel(string path)
@@ -267,6 +273,7 @@ new StreamWriter(@path + @"\Full List.txt", true))
             //boatDictionary.Add("hi", boat1);
             Console.WriteLine("Enter path to folder of files");
             string path = Console.ReadLine();
+            ExcelWriteFile(path);
             LoadFullExcel(path);
             boatDictionary = LoadFullFile(path);
             //Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
