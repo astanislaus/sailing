@@ -57,7 +57,7 @@ namespace Sailing
         public static Dictionary<string, Boats> LoadFullFile(string path)
         //public static string LoadFullFile()
         {
-            StreamReader reader = System.IO.File.OpenText(@path+@"\Full List.txt");
+            StreamReader reader = System.IO.File.OpenText(@path + @"Full List.txt");
             string line;
             Dictionary<int, BoatsFromExcel> BoatDictionaryInterim = new Dictionary<int, BoatsFromExcel>();
             Dictionary<string, Boats> BoatDictionary = new Dictionary<string, Boats>();
@@ -148,9 +148,9 @@ namespace Sailing
                     BoatDictionary.Add(boat3.name, boat3);
                     keys.Add(BoatDictionaryInterim[m].name);
                 }
-                    m++;
+                m++;
 
-                
+
 
 
 
@@ -172,8 +172,16 @@ namespace Sailing
             Dictionary<string, Boats> boatDictionary = new Dictionary<string, Boats>();
             Dictionary<string, BoatsRacing> raceDictionary = new Dictionary<string, BoatsRacing>();
             //boatDictionary.Add("hi", boat1);
-            Console.WriteLine("Enter path to folder of files");
-            string path = Console.ReadLine();
+            //Console.WriteLine("Enter path to folder of files");
+            string[] path1 = System.Reflection.Assembly.GetEntryAssembly().Location.Split(char.Parse(@"\"));
+            string path = "";
+            int b = 0;
+            while (path1[b] != "Sailing2")
+            {
+                path = string.Concat(path + path1[b] + @"\");
+                b++;
+            }
+            //string path2 = path.Split(path)
             boatDictionary = LoadFullFile(path);
             //Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
             //string hi = LoadFullFile();
@@ -425,7 +433,7 @@ namespace Sailing
                 catch (KeyNotFoundException)
                 {
 
-                    Console.WriteLine("Your name, "+ person +", is not in my records, would you like to add it?(y/n)");
+                    Console.WriteLine("Your name, " + person + ", is not in my records, would you like to add it?(y/n)");
                     string response = Console.ReadLine();
                     if (string.Equals(response, "y"))
                     {
@@ -459,126 +467,126 @@ namespace Sailing
 
         }
 
-    }
 
-    public class BoatsRacing
-    {
-        public string name { get; set; }
-        public string boatName { get; set; }
-        public int boatNumber { get; set; }
-
-        public BoatsRacing(string Name, string Boat, int BoatNumber)
+        public class BoatsRacing
         {
-            name = Name;
-            boatName = Boat;
-            boatNumber = BoatNumber;
+            public string name { get; set; }
+            public string boatName { get; set; }
+            public int boatNumber { get; set; }
+
+            public BoatsRacing(string Name, string Boat, int BoatNumber)
+            {
+                name = Name;
+                boatName = Boat;
+                boatNumber = BoatNumber;
+
+
+            }
+        }
+
+        public class Boats
+        {
+            public string name { get; set; }
+            public int noOfBoats { get; set; }
+            public string boat1 { get; set; }
+            public int boatNumber1 { get; set; }
+            public string boat2 { get; set; }
+            public int boatNumber2 { get; set; }
+            public string boat3 { get; set; }
+            public int boatNumber3 { get; set; }
+            public string boat4 { get; set; }
+            public int boatNumber4 { get; set; }
+            public string boat5 { get; set; }
+            public int boatNumber5 { get; set; }
+
+            public Boats(string Name, string Boat1, int BoatNumber1)
+            {
+                name = Name;
+                noOfBoats = 1;
+                boat1 = Boat1;
+                boatNumber1 = BoatNumber1;
+
+
+            }
+            public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
+            int BoatNumber2)
+            {
+                name = Name;
+                noOfBoats = 2;
+                boat1 = Boat1;
+                boatNumber1 = BoatNumber1;
+                boat2 = Boat2;
+                boatNumber2 = BoatNumber2;
+
+
+
+            }
+            public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
+            int BoatNumber2, string Boat3, int BoatNumber3)
+            {
+                name = Name;
+                noOfBoats = 3;
+                boat1 = Boat1;
+                boatNumber1 = BoatNumber1;
+                boat2 = Boat2;
+                boatNumber2 = BoatNumber2;
+                boat3 = Boat3;
+                boatNumber3 = BoatNumber3;
+
+
+            }
+            public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
+            int BoatNumber2, string Boat3, int BoatNumber3, string Boat4, int BoatNumber4)
+            {
+                name = Name;
+                noOfBoats = 4;
+                boat1 = Boat1;
+                boatNumber1 = BoatNumber1;
+                boat2 = Boat2;
+                boatNumber2 = BoatNumber2;
+                boat3 = Boat3;
+                boatNumber3 = BoatNumber3;
+                boat4 = Boat4;
+                boatNumber4 = BoatNumber4;
+
+
+            }
+            public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
+            int BoatNumber2, string Boat3, int BoatNumber3, string Boat4, int BoatNumber4,
+            string Boat5, int BoatNumber5)
+            {
+                name = Name;
+                noOfBoats = 5;
+                boat1 = Boat1;
+                boatNumber1 = BoatNumber1;
+                boat2 = Boat2;
+                boatNumber2 = BoatNumber2;
+                boat3 = Boat3;
+                boatNumber3 = BoatNumber3;
+                boat4 = Boat4;
+                boatNumber4 = BoatNumber4;
+                boat5 = Boat5;
+                boatNumber5 = BoatNumber5;
+
+            }
+
+
+
 
 
         }
-    }
-
-    public class Boats
-    {
-        public string name { get; set; }
-        public int noOfBoats { get; set; }
-        public string boat1 { get; set; }
-        public int boatNumber1 { get; set; }
-        public string boat2 { get; set; }
-        public int boatNumber2 { get; set; }
-        public string boat3 { get; set; }
-        public int boatNumber3 { get; set; }
-        public string boat4 { get; set; }
-        public int boatNumber4 { get; set; }
-        public string boat5 { get; set; }
-        public int boatNumber5 { get; set; }
-
-        public Boats(string Name, string Boat1, int BoatNumber1)
+        public class BoatsFromExcel
         {
-            name = Name;
-            noOfBoats = 1;
-            boat1 = Boat1;
-            boatNumber1 = BoatNumber1;
+            public string name { get; set; }
+            public int boatNumber { get; set; }
+            public string boat { get; set; }
+            public BoatsFromExcel(string Name, int BoatNumber, string Boat)
+            {
+                name = Name;
+                boatNumber = BoatNumber;
+                boat = Boat;
 
-
-        }
-        public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
-        int BoatNumber2)
-        {
-            name = Name;
-            noOfBoats = 2;
-            boat1 = Boat1;
-            boatNumber1 = BoatNumber1;
-            boat2 = Boat2;
-            boatNumber2 = BoatNumber2;
-
-
-
-        }
-        public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
-        int BoatNumber2, string Boat3, int BoatNumber3)
-        {
-            name = Name;
-            noOfBoats = 3;
-            boat1 = Boat1;
-            boatNumber1 = BoatNumber1;
-            boat2 = Boat2;
-            boatNumber2 = BoatNumber2;
-            boat3 = Boat3;
-            boatNumber3 = BoatNumber3;
-
-
-        }
-        public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
-        int BoatNumber2, string Boat3, int BoatNumber3, string Boat4, int BoatNumber4)
-        {
-            name = Name;
-            noOfBoats = 4;
-            boat1 = Boat1;
-            boatNumber1 = BoatNumber1;
-            boat2 = Boat2;
-            boatNumber2 = BoatNumber2;
-            boat3 = Boat3;
-            boatNumber3 = BoatNumber3;
-            boat4 = Boat4;
-            boatNumber4 = BoatNumber4;
-
-
-        }
-        public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
-        int BoatNumber2, string Boat3, int BoatNumber3, string Boat4, int BoatNumber4,
-        string Boat5, int BoatNumber5)
-        {
-            name = Name;
-            noOfBoats = 5;
-            boat1 = Boat1;
-            boatNumber1 = BoatNumber1;
-            boat2 = Boat2;
-            boatNumber2 = BoatNumber2;
-            boat3 = Boat3;
-            boatNumber3 = BoatNumber3;
-            boat4 = Boat4;
-            boatNumber4 = BoatNumber4;
-            boat5 = Boat5;
-            boatNumber5 = BoatNumber5;
-
-        }
-
-
-
-
-
-    }
-    public class BoatsFromExcel
-    {
-        public string name { get; set; }
-        public int boatNumber { get; set; }
-        public string boat { get; set; }
-        public BoatsFromExcel(string Name, int BoatNumber, string Boat)
-        {
-            name = Name;
-            boatNumber = BoatNumber;
-            boat = Boat;
-
+            }
         }
     }
 }
