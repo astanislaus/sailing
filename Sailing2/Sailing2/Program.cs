@@ -14,7 +14,7 @@ namespace Sailing
 
     class Program
     { 
-        //public static void ExcelWriteFile(string path, string name, string boat, int boatNumber)
+        //.public static void ExcelWriteFile(string path, string name, string boat, int boatNumber)
         public static void ExcelWriteFile(string path)
         {
             File.Delete(@path + @"\test.xls");
