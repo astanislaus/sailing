@@ -388,7 +388,8 @@ namespace Sailing
                             if (response == "T" || response == "t")
                             {
                                 raceDictionary.Add(boatDictionary[person].name, converter5(boatDictionary[person]));
-                                Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
+                                Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + 
+                                    raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
                                 using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
