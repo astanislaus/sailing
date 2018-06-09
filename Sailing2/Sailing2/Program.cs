@@ -172,7 +172,7 @@ namespace Sailing
             Dictionary<string, Boats> boatDictionary = new Dictionary<string, Boats>();
             Dictionary<string, BoatsRacing> raceDictionary = new Dictionary<string, BoatsRacing>();
             //boatDictionary.Add("hi", boat1);
-            Console.WriteLine("Enter path to folder of files");
+            Console.WriteLine("Enter path to folder of files.");
             string path = Console.ReadLine();
             boatDictionary = LoadFullFile(path);
             //Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
