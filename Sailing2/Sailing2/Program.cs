@@ -5,12 +5,111 @@ using System.Security;
 using Microsoft;
 using System.Windows.Input;
 using System.Linq;
+using System.Data;
+using ExcelDataReader;
+using System.Data.OleDb;
 
 namespace Sailing
 {
 
     class Program
-    {
+    { 
+        //public static void ExcelWriteFile(string path, string name, string boat, int boatNumber)
+        public static void ExcelWriteFile(string path)
+        {
+            File.Delete(@path + @"\test.xls");
+            var connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + @path + @"\test.xls" + ";Extended Properties=Excel 8.0";
+            using (var excelConnection = new OleDbConnection(connectionString))
+            {
+                // The excel file does not need to exist, opening the connection will create the
+                // excel file for you
+                if (excelConnection.State != ConnectionState.Open) { excelConnection.Open(); }
+
+                // data is an object so it works with DBNull.Value
+                object propertyOneValue = "Luke Stanislaus";
+                object propertyTwoValue = "Laser";
+                object BoatNumber = "162872";
+
+                var sqlText = "CREATE TABLE Boatlistfull ([Name] VARCHAR(100), [Boat] VARCHAR(100), [BoatNumber] INT)";
+
+                //var sqlText = "CREATE TABLE Boatlistfull ([Name] VARCHAR(100), [Boat] VARCHAR(100), [BoatNumber] VARCHAR(100)";
+
+                // Executing this command will create the worksheet inside of the workbook
+                // the table name will be the new worksheet name
+                using (var command = new OleDbCommand(sqlText, excelConnection)) { command.ExecuteNonQuery(); }
+
+                // Add (insert) data to the worksheet
+                var commandText = $"Insert Into Boatlistfull ([Name], [Boat], [BoatNumber]) Values (@PropertyOne, @PropertyTwo, @BoatNumber)";
+
+                using (var command = new OleDbCommand(commandText, excelConnection))
+                {
+                    // We need to allow for nulls just like we would with
+                    // sql, if your data is null a DBNull.Value should be used
+                    // instead of null 
+                    command.Parameters.AddWithValue("@Name", propertyOneValue ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Boat", propertyTwoValue ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@BoatNumber", BoatNumber ?? DBNull.Value);
+
+                    command.ExecuteNonQuery();
+                }
+                
+            }
+        }
+        //public static Dictionary<string, Boats> LoadFullExcel(string path)
+        public static void LoadFullExcel(string path)
+        {
+            using (var stream = File.Open(@path + @"\WFSC_DATA (3).xlsx", FileMode.Open, FileAccess.Read))
+            {
+
+                // Auto-detect format, supports:
+                //  - Binary Excel files (2.0-2003 format; *.xls)
+                //  - OpenXml Excel files (2007 format; *.xlsx)
+                /*
+                using (StreamWriter file =
+new StreamWriter(@path + @"\Full List.txt", true))
+                {
+
+                }
+                */
+
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                         //2. Use the AsDataSet extension method
+                        var result = reader.AsDataSet();
+                        DataTable table = new DataTable();
+                        Console.ReadLine();
+                        table = result.Tables[2];
+                        File.Delete(@path + @"\Full List.txt");
+                        //File.Create(@path + @"\Full List.txt");
+                        using (StreamWriter file =
+new StreamWriter(@path + @"\Full List.txt", true))
+                        {
+
+                            foreach (DataRow dr in table.Rows)
+                            {
+                                if (!dr["Column2"].ToString().Equals("") && !dr["Column2"].ToString().Equals("Class"))
+                                {
+
+
+                                file.WriteLine("{0}\t{1}\t{2}", dr["Column0"].ToString(),
+                                dr["Column1"].ToString(), dr["Column2"].ToString());
+                                    //Console.WriteLine(dr["Column2"].ToString());
+                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
+
+                                }
+                                //Console.WriteLine(table.Rows[2][1]);
+
+
+                                //DataRow hi =  new result.Tables[2].Rows[2];
+                                // The result of each spreadsheet is in result.Tables
+                            }
+                        file.Close();
+                        }
+                    }
+                
+            }
+        }
+        
         public static BoatsRacing converter1(Boats boat)
         {
             BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat1, boat.boatNumber1);
@@ -36,9 +135,9 @@ namespace Sailing
             BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat5, boat.boatNumber5);
             return racer1;
         }
-        public static Dictionary<string, BoatsRacing> loadRaceFile(Dictionary<string, BoatsRacing> raceDictionary)
+        public static Dictionary<string, BoatsRacing> loadRaceFile(Dictionary<string, BoatsRacing> raceDictionary, string path)
         {
-            StreamReader reader = System.IO.File.OpenText(@"c:\temp\Race List.txt");
+            StreamReader reader = System.IO.File.OpenText(@path + @"\Race List.txt");
             string line;
             while ((line = reader.ReadLine()) != null)
             {
@@ -171,7 +270,6 @@ namespace Sailing
             //Boats boat3 = new Boats("Simon Clark", 2, "Phantom", 1080, "Laser", 1234);
             Dictionary<string, Boats> boatDictionary = new Dictionary<string, Boats>();
             Dictionary<string, BoatsRacing> raceDictionary = new Dictionary<string, BoatsRacing>();
-            //boatDictionary.Add("hi", boat1);
             //Console.WriteLine("Enter path to folder of files");
             string[] path1 = System.Reflection.Assembly.GetEntryAssembly().Location.Split(char.Parse(@"\"));
             string path = "";
@@ -223,6 +321,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 1)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -232,7 +331,7 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
                                         file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
 
@@ -272,6 +371,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 2)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -283,7 +383,7 @@ namespace Sailing
                                     using (StreamWriter file =
             new StreamWriter(@path + @"\Full List.txt", true))
                                     {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
@@ -315,6 +415,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 3)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -324,9 +425,9 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
@@ -358,6 +459,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 4)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -367,9 +469,9 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
@@ -404,6 +506,7 @@ namespace Sailing
                             }
                             else if (boatDictionary[person].noOfBoats == 5)
                             {
+                                Console.Clear();
                                 Console.WriteLine("Would you like to add a boat? y/n");
                                 response = Console.ReadLine();
                                 if (response == "y")
@@ -413,9 +516,9 @@ namespace Sailing
                                     Console.Write("Enter the boat number of the boat ");
                                     int boatNumber = int.Parse(Console.ReadLine());
                                     using (StreamWriter file =
-            new StreamWriter(@"c:\temp\Full List.txt", true))
+            new StreamWriter(@path + @"\Full List.txt", true))
                                     {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
 
                                     }
                                     //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
