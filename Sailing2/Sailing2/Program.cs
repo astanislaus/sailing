@@ -14,6 +14,30 @@ namespace Sailing
 
     class Program
     { 
+        public static void Addboats(string response, string path, string person, 
+            Dictionary<string, Boats> boatDictionary)
+        {
+            Console.Clear();
+            Console.WriteLine("Would you like to add a boat? y/n");
+            response = Console.ReadLine();
+            if (response == "y")
+            {
+                Console.WriteLine("Enter the name of the boat");
+                string boat = Console.ReadLine();
+                Console.Write("Enter the boat number of the boat ");
+                int boatNumber = int.Parse(Console.ReadLine());
+                using (StreamWriter file =
+new StreamWriter(@path + @"\Full List.txt", true))
+                {
+                    file.Write("\n{0}\t{1}\t{2}", person, boatNumber, boat);
+
+                }
+                //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
+
+                //string hi1 = LoadFullFile();
+                Console.Clear();
+            }
+        }
         //public static void ExcelWriteFile(string path, string name, string boat, int boatNumber)
         public static void ExcelWriteFile(string path)
         {
@@ -321,27 +345,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 1)
                             {
-                                Console.Clear();
-                                Console.WriteLine("Would you like to add a boat? y/n");
-                                response = Console.ReadLine();
-                                if (response == "y")
-                                {
-                                    Console.WriteLine("Enter the name of the boat");
-                                    string boat = Console.ReadLine();
-                                    Console.Write("Enter the boat number of the boat ");
-                                    int boatNumber = int.Parse(Console.ReadLine());
-                                    using (StreamWriter file =
-            new StreamWriter(@path + @"\Full List.txt", true))
-                                    {
-                                        file.WriteLine("\n{0}\t{1}\t{2}", person, boatNumber, boat);
-
-                                    }
-                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile(path);
-                                    //string hi1 = LoadFullFile();
-                                    Console.Clear();
-                                }
-
+                                Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile(path);
                             }
                         }
                         if (boatDictionary[person].noOfBoats > 1)
@@ -371,27 +376,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 2)
                             {
-                                Console.Clear();
-                                Console.WriteLine("Would you like to add a boat? y/n");
-                                response = Console.ReadLine();
-                                if (response == "y")
-                                {
-                                    Console.WriteLine("Enter the name of the boat");
-                                    string boat = Console.ReadLine();
-                                    Console.Write("Enter the boat number of the boat ");
-                                    int boatNumber = int.Parse(Console.ReadLine());
-                                    using (StreamWriter file =
-            new StreamWriter(@path + @"\Full List.txt", true))
-                                    {
-                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
-
-                                    }
-                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile(path);
-                                    //string hi1 = LoadFullFile();
-                                    Console.Clear();
-                                }
-
+                                Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile(path);
                             }
                         }
                         if (boatDictionary[person].noOfBoats > 2)
@@ -415,27 +401,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 3)
                             {
-                                Console.Clear();
-                                Console.WriteLine("Would you like to add a boat? y/n");
-                                response = Console.ReadLine();
-                                if (response == "y")
-                                {
-                                    Console.WriteLine("Enter the name of the boat");
-                                    string boat = Console.ReadLine();
-                                    Console.Write("Enter the boat number of the boat ");
-                                    int boatNumber = int.Parse(Console.ReadLine());
-                                    using (StreamWriter file =
-            new StreamWriter(@path + @"\Full List.txt", true))
-                                    {
-                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
-
-                                    }
-                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile(path);
-                                    //string hi1 = LoadFullFile();
-                                    Console.Clear();
-                                }
-
+                                Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile(path);
                             }
                         }
                         if (boatDictionary[person].noOfBoats > 3)
@@ -459,27 +426,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 4)
                             {
-                                Console.Clear();
-                                Console.WriteLine("Would you like to add a boat? y/n");
-                                response = Console.ReadLine();
-                                if (response == "y")
-                                {
-                                    Console.WriteLine("Enter the name of the boat");
-                                    string boat = Console.ReadLine();
-                                    Console.Write("Enter the boat number of the boat ");
-                                    int boatNumber = int.Parse(Console.ReadLine());
-                                    using (StreamWriter file =
-            new StreamWriter(@path + @"\Full List.txt", true))
-                                    {
-                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
-
-                                    }
-                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile(path);
-                                    //string hi1 = LoadFullFile();
-                                    Console.Clear();
-                                }
-
+                                Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile(path);
                             }
 
                         }
@@ -506,27 +454,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 5)
                             {
-                                Console.Clear();
-                                Console.WriteLine("Would you like to add a boat? y/n");
-                                response = Console.ReadLine();
-                                if (response == "y")
-                                {
-                                    Console.WriteLine("Enter the name of the boat");
-                                    string boat = Console.ReadLine();
-                                    Console.Write("Enter the boat number of the boat ");
-                                    int boatNumber = int.Parse(Console.ReadLine());
-                                    using (StreamWriter file =
-            new StreamWriter(@path + @"\Full List.txt", true))
-                                    {
-                                        file.WriteLine("{0}\t{1}\t{2}", person, boatNumber, boat);
-
-                                    }
-                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-                                    boatDictionary = LoadFullFile(path);
-                                    //string hi1 = LoadFullFile();
-                                    Console.Clear();
-                                }
-
+                                Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile(path);
                             }
 
                         }
