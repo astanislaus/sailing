@@ -8,287 +8,16 @@ using System.Linq;
 using System.Data;
 using ExcelDataReader;
 using System.Data.OleDb;
+using Sailing2;
 
 namespace Sailing
 {
 
     class Program
     { 
-        public static void Addboats(string response, string path, string person, 
-            Dictionary<string, Boats> boatDictionary)
-        {
-            Console.Clear();
-            Console.WriteLine("Would you like to add a boat? y/n");
-            response = Console.ReadLine();
-            if (response == "y")
-            {
-                Console.WriteLine("Enter the name of the boat");
-                string boat = Console.ReadLine();
-                Console.Write("Enter the boat number of the boat ");
-                int boatNumber = int.Parse(Console.ReadLine());
-                using (StreamWriter file =
-new StreamWriter(@path + @"\Full List.txt", true))
-                {
-                    file.Write("\n{0}\t{1}\t{2}", person, boatNumber, boat);
-
-                }
-                //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-
-                //string hi1 = LoadFullFile();
-                Console.Clear();
-            }
-        }
-        //public static void ExcelWriteFile(string path, string name, string boat, int boatNumber)
-        public static void ExcelWriteFile(string path)
-        {
-            File.Delete(@path + @"\test.xls");
-            var connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + @path + @"\test.xls" + ";Extended Properties=Excel 8.0";
-            using (var excelConnection = new OleDbConnection(connectionString))
-            {
-                // The excel file does not need to exist, opening the connection will create the
-                // excel file for you
-                if (excelConnection.State != ConnectionState.Open) { excelConnection.Open(); }
-
-                // data is an object so it works with DBNull.Value
-                object propertyOneValue = "Luke Stanislaus";
-                object propertyTwoValue = "Laser";
-                object BoatNumber = "162872";
-
-                var sqlText = "CREATE TABLE Boatlistfull ([Name] VARCHAR(100), [Boat] VARCHAR(100), [BoatNumber] INT)";
-
-                //var sqlText = "CREATE TABLE Boatlistfull ([Name] VARCHAR(100), [Boat] VARCHAR(100), [BoatNumber] VARCHAR(100)";
-
-                // Executing this command will create the worksheet inside of the workbook
-                // the table name will be the new worksheet name
-                using (var command = new OleDbCommand(sqlText, excelConnection)) { command.ExecuteNonQuery(); }
-
-                // Add (insert) data to the worksheet
-                var commandText = $"Insert Into Boatlistfull ([Name], [Boat], [BoatNumber]) Values (@PropertyOne, @PropertyTwo, @BoatNumber)";
-
-                using (var command = new OleDbCommand(commandText, excelConnection))
-                {
-                    // We need to allow for nulls just like we would with
-                    // sql, if your data is null a DBNull.Value should be used
-                    // instead of null 
-                    command.Parameters.AddWithValue("@Name", propertyOneValue ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@Boat", propertyTwoValue ?? DBNull.Value);
-                    command.Parameters.AddWithValue("@BoatNumber", BoatNumber ?? DBNull.Value);
-
-                    command.ExecuteNonQuery();
-                }
-                
-            }
-        }
-        //public static Dictionary<string, Boats> LoadFullExcel(string path)
-        public static void LoadFullExcel(string path)
-        {
-            using (var stream = File.Open(@path + @"\WFSC_DATA (3).xlsx", FileMode.Open, FileAccess.Read))
-            {
-
-                // Auto-detect format, supports:
-                //  - Binary Excel files (2.0-2003 format; *.xls)
-                //  - OpenXml Excel files (2007 format; *.xlsx)
-                /*
-                using (StreamWriter file =
-new StreamWriter(@path + @"\Full List.txt", true))
-                {
-
-                }
-                */
-
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
-                    {
-                         //2. Use the AsDataSet extension method
-                        var result = reader.AsDataSet();
-                        DataTable table = new DataTable();
-                        Console.ReadLine();
-                        table = result.Tables[2];
-                        File.Delete(@path + @"\Full List.txt");
-                        //File.Create(@path + @"\Full List.txt");
-                        using (StreamWriter file =
-new StreamWriter(@path + @"\Full List.txt", true))
-                        {
-
-                            foreach (DataRow dr in table.Rows)
-                            {
-                                if (!dr["Column2"].ToString().Equals("") && !dr["Column2"].ToString().Equals("Class"))
-                                {
-
-
-                                file.WriteLine("{0}\t{1}\t{2}", dr["Column0"].ToString(),
-                                dr["Column1"].ToString(), dr["Column2"].ToString());
-                                    //Console.WriteLine(dr["Column2"].ToString());
-                                    //Dictionary<string, Boats> nothing1 = new Dictionary<string, Boats>();
-
-                                }
-                                //Console.WriteLine(table.Rows[2][1]);
-
-
-                                //DataRow hi =  new result.Tables[2].Rows[2];
-                                // The result of each spreadsheet is in result.Tables
-                            }
-                        file.Close();
-                        }
-                    }
-                
-            }
-        }
-        
-        public static BoatsRacing converter1(Boats boat)
-        {
-            BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat1, boat.boatNumber1);
-            return racer1;
-        }
-        public static BoatsRacing converter2(Boats boat)
-        {
-            BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat2, boat.boatNumber2);
-            return racer1;
-        }
-        public static BoatsRacing converter3(Boats boat)
-        {
-            BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat3, boat.boatNumber3);
-            return racer1;
-        }
-        public static BoatsRacing converter4(Boats boat)
-        {
-            BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat4, boat.boatNumber4);
-            return racer1;
-        }
-        public static BoatsRacing converter5(Boats boat)
-        {
-            BoatsRacing racer1 = new BoatsRacing(boat.name, boat.boat5, boat.boatNumber5);
-            return racer1;
-        }
-        public static Dictionary<string, BoatsRacing> loadRaceFile(Dictionary<string, BoatsRacing> raceDictionary, string path)
-        {
-            StreamReader reader = System.IO.File.OpenText(@path + @"\Race List.txt");
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                string[] items = line.Split(char.Parse(", "));
-                Console.WriteLine("{0}, {1}, {2}", items[0], items[1], items[2]);
-                BoatsRacing boat1 = new BoatsRacing(items[0], items[1], int.Parse(items[2]));
-
-
-                raceDictionary.Add(items[0], boat1);
-
-
-            }
-            reader.Close();
-            return raceDictionary;
-        }
-        public static Dictionary<string, Boats> LoadFullFile(string path)
-        //public static string LoadFullFile()
-        {
-            StreamReader reader = System.IO.File.OpenText(@path + @"Full List.txt");
-            string line;
-            Dictionary<int, BoatsFromExcel> BoatDictionaryInterim = new Dictionary<int, BoatsFromExcel>();
-            Dictionary<string, Boats> BoatDictionary = new Dictionary<string, Boats>();
-
-            int count1 = 0;
-            while ((line = reader.ReadLine()) != null)
-
-            {
-                string[] items = line.Split(char.Parse("\n"));
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] items1 = line.Split('\t');
-                    BoatsFromExcel boat1 = new BoatsFromExcel(items1[0], int.Parse(items1[1]), items1[2]);
-                    BoatDictionaryInterim.Add(count1, boat1);
-                    count1++;
-                }
-
-
-            }
-            List<string> keys = new List<string>();
-
-            int m = 0;
-            foreach (KeyValuePair<int, BoatsFromExcel> Boat in BoatDictionaryInterim)
-            {
-                if (keys.Contains(BoatDictionaryInterim[m].name))
-                {
-                    if (BoatDictionary[BoatDictionaryInterim[m].name].boat2 == null)
-                    {
-                        Boats boat1 = new Boats(BoatDictionaryInterim[m].name,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat1,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber1,
-                        BoatDictionaryInterim[m].boat,
-                        BoatDictionaryInterim[m].boatNumber);
-                        BoatDictionary.Remove(BoatDictionaryInterim[m].name);
-                        BoatDictionary.Add(boat1.name, boat1);
-                    }
-                    else if (BoatDictionary[BoatDictionaryInterim[m].name].boat3 == null)
-                    {
-
-                        Boats boat1 = new Boats(BoatDictionaryInterim[m].name,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat1,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber1,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat2,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber2,
-                        BoatDictionaryInterim[m].boat,
-                        BoatDictionaryInterim[m].boatNumber);
-                        BoatDictionary.Remove(BoatDictionaryInterim[m].name);
-                        BoatDictionary.Add(boat1.name, boat1);
-                    }
-                    else if (BoatDictionary[BoatDictionaryInterim[m].name].boat4 == null)
-                    {
-                        Boats boat1 = new Boats(BoatDictionaryInterim[m].name,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat1,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber1,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat2,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber2,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat3,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber3,
-                        BoatDictionaryInterim[m].boat,
-                        BoatDictionaryInterim[m].boatNumber);
-                        BoatDictionary.Remove(BoatDictionaryInterim[m].name);
-                        BoatDictionary.Add(boat1.name, boat1);
-                    }
-                    else if (BoatDictionary[BoatDictionaryInterim[m].name].boat5 == null)
-                    {
-                        Boats boat1 = new Boats(BoatDictionaryInterim[m].name,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat1,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber1,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat2,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber2,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat3,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber3,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boat4,
-                        BoatDictionary[BoatDictionaryInterim[m].name].boatNumber4,
-                        BoatDictionaryInterim[m].boat,
-                        BoatDictionaryInterim[m].boatNumber);
-                        BoatDictionary.Remove(BoatDictionaryInterim[m].name);
-                        BoatDictionary.Add(boat1.name, boat1);
-                    }
-
-                }
-                else
-                {
-                    Boats boat3 = new Boats(BoatDictionaryInterim[m].name,
-                    BoatDictionaryInterim[m].boat,
-                    BoatDictionaryInterim[m].boatNumber);
-                    BoatDictionary.Add(boat3.name, boat3);
-                    keys.Add(BoatDictionaryInterim[m].name);
-                }
-                m++;
-
-
-
-
-
-
-            }
-            reader.Close();
-            return BoatDictionary;
-        }
-
-
-
         static void Main(string[] args)
         {
-
-
+            List<Boats> boatlist = new List<Boats>();
             //Boats boat1 = new Boats("Adrian Stanislaus", 2, "Laser Stratos", 927, "Laser", 182782);
             //Boats boat2 = new Boats("Luke Stanislaus", 1, "Laser Stratos", 182782, null, 0);
             //Boats boat3 = new Boats("Simon Clark", 2, "Phantom", 1080, "Laser", 1234);
@@ -304,14 +33,20 @@ new StreamWriter(@path + @"\Full List.txt", true))
                 b++;
             }
             //string path2 = path.Split(path)
-            boatDictionary = LoadFullFile(path);
+            Console.WriteLine("Enter name");
+            string name1 = Console.ReadLine();
+            LoadFullSQL db = new LoadFullSQL();
+            boatlist = db.GetBoats();
+            Console.WriteLine(db.GetBoat(name1).boat1);
+            boatDictionary = LoadFullSQL.getdictionary(boatlist);
+            //boatDictionary = LoadFullFile.loadFullFile(path);
             //Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
             //string hi = LoadFullFile();
             //Console.WriteLine(boatDictionary["Abc"].name);
             //boatDictionary.Add(boat1.name, boat1);
             //boatDictionary.Add(boat2.name, boat2);
             //boatDictionary.Add(boat3.name, boat3);
-
+            //LoadFullFile.ExportToFile(boatDictionary, path);
 
             while (true)
             {
@@ -330,7 +65,7 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             if (response == "T" || response == "t")
                             {
 
-                                raceDictionary.Add(boatDictionary[person].name, converter1(boatDictionary[person]));
+                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter1(boatDictionary[person]));
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
@@ -345,8 +80,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 1)
                             {
-                                Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile(path);
+                                Boats.Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile.loadFullFile(path);
                             }
                         }
                         if (boatDictionary[person].noOfBoats > 1)
@@ -355,7 +90,7 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             string response = Console.ReadLine();
                             if (response == "T" || response == "t")
                             {
-                                raceDictionary.Add(boatDictionary[person].name, converter2(boatDictionary[person]));
+                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter2(boatDictionary[person]));
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
@@ -376,8 +111,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 2)
                             {
-                                Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile(path);
+                                Boats.Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile.loadFullFile(path);
                             }
                         }
                         if (boatDictionary[person].noOfBoats > 2)
@@ -386,7 +121,7 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             string response = Console.ReadLine();
                             if (response == "T" || response == "t")
                             {
-                                raceDictionary.Add(boatDictionary[person].name, converter3(boatDictionary[person]));
+                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter3(boatDictionary[person]));
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
@@ -401,8 +136,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 3)
                             {
-                                Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile(path);
+                                Boats.Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile.loadFullFile(path);
                             }
                         }
                         if (boatDictionary[person].noOfBoats > 3)
@@ -411,7 +146,7 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             string response = Console.ReadLine();
                             if (response == "T" || response == "t")
                             {
-                                raceDictionary.Add(boatDictionary[person].name, converter4(boatDictionary[person]));
+                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter4(boatDictionary[person]));
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
                                 Console.ReadLine();
                                 // Create a file to write to.
@@ -426,8 +161,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 4)
                             {
-                                Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile(path);
+                                Boats.Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile.loadFullFile(path);
                             }
 
                         }
@@ -437,7 +172,7 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             string response = Console.ReadLine();
                             if (response == "T" || response == "t")
                             {
-                                raceDictionary.Add(boatDictionary[person].name, converter5(boatDictionary[person]));
+                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter5(boatDictionary[person]));
                                 Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + 
                                     raceDictionary[person].boatName);
                                 Console.ReadLine();
@@ -454,8 +189,8 @@ new StreamWriter(@path + @"\Full List.txt", true))
                             }
                             else if (boatDictionary[person].noOfBoats == 5)
                             {
-                                Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile(path);
+                                Boats.Addboats(response, path, person, boatDictionary);
+                                boatDictionary = LoadFullFile.loadFullFile(path);
                             }
 
                         }
@@ -484,7 +219,7 @@ new StreamWriter(@path + @"\Full List.txt", true))
     new StreamWriter(@"c:\temp\Full List.txt", true))
                             {
                                 file.WriteLine("{0}\t{1}\t{2}", name, boatNumber, boat);
-
+                                //LoadFullSQL.AddPerson()
 
                             }
 
@@ -493,133 +228,11 @@ new StreamWriter(@path + @"\Full List.txt", true))
                     }
                 }
                 //Dictionary<string, Boats> nothing = new Dictionary<string, Boats>();
-                boatDictionary = LoadFullFile(path);
+                boatDictionary = LoadFullFile.loadFullFile(path);
                 //string hi2 = LoadFullFile();
                 Console.Clear();
             }
 
-        }
-
-
-        public class BoatsRacing
-        {
-            public string name { get; set; }
-            public string boatName { get; set; }
-            public int boatNumber { get; set; }
-
-            public BoatsRacing(string Name, string Boat, int BoatNumber)
-            {
-                name = Name;
-                boatName = Boat;
-                boatNumber = BoatNumber;
-
-
-            }
-        }
-
-        public class Boats
-        {
-            public string name { get; set; }
-            public int noOfBoats { get; set; }
-            public string boat1 { get; set; }
-            public int boatNumber1 { get; set; }
-            public string boat2 { get; set; }
-            public int boatNumber2 { get; set; }
-            public string boat3 { get; set; }
-            public int boatNumber3 { get; set; }
-            public string boat4 { get; set; }
-            public int boatNumber4 { get; set; }
-            public string boat5 { get; set; }
-            public int boatNumber5 { get; set; }
-
-            public Boats(string Name, string Boat1, int BoatNumber1)
-            {
-                name = Name;
-                noOfBoats = 1;
-                boat1 = Boat1;
-                boatNumber1 = BoatNumber1;
-
-
-            }
-            public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
-            int BoatNumber2)
-            {
-                name = Name;
-                noOfBoats = 2;
-                boat1 = Boat1;
-                boatNumber1 = BoatNumber1;
-                boat2 = Boat2;
-                boatNumber2 = BoatNumber2;
-
-
-
-            }
-            public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
-            int BoatNumber2, string Boat3, int BoatNumber3)
-            {
-                name = Name;
-                noOfBoats = 3;
-                boat1 = Boat1;
-                boatNumber1 = BoatNumber1;
-                boat2 = Boat2;
-                boatNumber2 = BoatNumber2;
-                boat3 = Boat3;
-                boatNumber3 = BoatNumber3;
-
-
-            }
-            public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
-            int BoatNumber2, string Boat3, int BoatNumber3, string Boat4, int BoatNumber4)
-            {
-                name = Name;
-                noOfBoats = 4;
-                boat1 = Boat1;
-                boatNumber1 = BoatNumber1;
-                boat2 = Boat2;
-                boatNumber2 = BoatNumber2;
-                boat3 = Boat3;
-                boatNumber3 = BoatNumber3;
-                boat4 = Boat4;
-                boatNumber4 = BoatNumber4;
-
-
-            }
-            public Boats(string Name, string Boat1, int BoatNumber1, string Boat2,
-            int BoatNumber2, string Boat3, int BoatNumber3, string Boat4, int BoatNumber4,
-            string Boat5, int BoatNumber5)
-            {
-                name = Name;
-                noOfBoats = 5;
-                boat1 = Boat1;
-                boatNumber1 = BoatNumber1;
-                boat2 = Boat2;
-                boatNumber2 = BoatNumber2;
-                boat3 = Boat3;
-                boatNumber3 = BoatNumber3;
-                boat4 = Boat4;
-                boatNumber4 = BoatNumber4;
-                boat5 = Boat5;
-                boatNumber5 = BoatNumber5;
-
-            }
-
-
-
-
-
-        }
-        public class BoatsFromExcel
-        {
-            public string name { get; set; }
-            public int boatNumber { get; set; }
-            public string boat { get; set; }
-            public BoatsFromExcel(string Name, int BoatNumber, string Boat)
-            {
-                name = Name;
-                boatNumber = BoatNumber;
-                boat = Boat;
-
-            }
         }
     }
 }
