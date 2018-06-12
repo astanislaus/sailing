@@ -9,6 +9,43 @@ namespace Sailing2
 {
     class LoadFullFile
     {
+        public void newpersontofile(string person)
+        {
+            Console.WriteLine("Your name, " + person + ", is not in my records, would you like to add it?(y/n)");
+            string response = Console.ReadLine();
+            if (string.Equals(response, "y"))
+            {
+                Console.WriteLine("Please re-enter your name, capitalised how you want it.");
+                string name = Console.ReadLine();
+                Console.WriteLine("Please enter the number of boats you have.");
+                int noOfBoats = int.Parse(Console.ReadLine());
+                for (int i = 0; i < noOfBoats; i++)
+                {
+                    Console.WriteLine("Enter the name of boat {0}", i);
+                    string boat = Console.ReadLine();
+                    Console.Write("Enter the boat number of boat {0}", i);
+                    int boatNumber = int.Parse(Console.ReadLine());
+                    using (StreamWriter file =
+new StreamWriter(@"c:\temp\Full List.txt", true))
+                    {
+                        file.WriteLine("{0}\t{1}\t{2}", name, boatNumber, boat);
+                        //LoadFullSQL.AddPerson()
+
+                    }
+
+
+                }
+            }
+        }
+        public void racerwritetofile(BoatsRacing racer, string path)
+        {
+            using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
+            {
+                sw.WriteLine("{0}, {1}, {2}", racer.name,
+                    racer.boatName,
+                    racer.boatNumber);
+            }
+        }
         public static void ExportToFile(Dictionary<string, Boats> fulldictionary, string path)
         {
             using (StreamWriter sw = File.AppendText(@path + @"\FullDump.csv"))

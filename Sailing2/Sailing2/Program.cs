@@ -14,15 +14,17 @@ namespace Sailing
 {
 
     class Program
-    { 
+    {
+        public List<Boats> boatlist = new List<Boats>();
+        public Boats personboat = new Boats();
         static void Main(string[] args)
         {
-            List<Boats> boatlist = new List<Boats>();
+            
             //Boats boat1 = new Boats("Adrian Stanislaus", 2, "Laser Stratos", 927, "Laser", 182782);
             //Boats boat2 = new Boats("Luke Stanislaus", 1, "Laser Stratos", 182782, null, 0);
             //Boats boat3 = new Boats("Simon Clark", 2, "Phantom", 1080, "Laser", 1234);
-            Dictionary<string, Boats> boatDictionary = new Dictionary<string, Boats>();
-            Dictionary<string, BoatsRacing> raceDictionary = new Dictionary<string, BoatsRacing>();
+            //List<Boats> boat = new Dictionary<string, Boats>();
+            List<BoatsRacing> raceList = new List<BoatsRacing>();
             //Console.WriteLine("Enter path to folder of files");
             string[] path1 = System.Reflection.Assembly.GetEntryAssembly().Location.Split(char.Parse(@"\"));
             string path = "";
@@ -33,12 +35,26 @@ namespace Sailing
                 b++;
             }
             //string path2 = path.Split(path)
+            /*
             Console.WriteLine("Enter name");
             string name1 = Console.ReadLine();
             LoadFullSQL db = new LoadFullSQL();
             boatlist = db.GetBoats();
             Console.WriteLine(db.GetBoat(name1).boat1);
-            boatDictionary = LoadFullSQL.getdictionary(boatlist);
+            */
+            //boatDictionary = LoadFullSQL.getdictionary(boatlist);
+            /*
+            Console.WriteLine("Enter name");
+            string name2 = Console.ReadLine();
+            Console.WriteLine("Enter boatname");
+            string boatname2 = Console.ReadLine();
+            Console.WriteLine("Enter boatnumber");
+            int boatnumber2 = int.Parse(Console.ReadLine());
+            if (LoadFullSQL.AddBoat(name2, boatname2, boatnumber2) == true)
+                Console.WriteLine("Success");
+            else
+                Console.WriteLine("Fail");
+                */
             //boatDictionary = LoadFullFile.loadFullFile(path);
             //Console.WriteLine(boatDictionary["Adrian Stanislaus"].boat1);
             //string hi = LoadFullFile();
@@ -54,184 +70,130 @@ namespace Sailing
                 string person = Console.ReadLine();
                 try
                 {
-
-                    while (person == boatDictionary[person].name)
+                    LoadFullSQL db1 = new LoadFullSQL();
+                    //Boats personboat = db1.GetBoat(person);
+                    Boats personboat = db1.GetBoat(person);
+                    while (person == personboat.name)
                     {
 
-                        if (boatDictionary[person].noOfBoats > 0)
+                        if (personboat.noOfBoats > 0)
                         {
-                            Console.WriteLine("Is your boat a(n) {0}, T/F?", boatDictionary[person].boat1);
+                            Console.WriteLine("Is your boat a(n) {0}, Y/N?", personboat.boat1);
                             string response = Console.ReadLine();
-                            if (response == "T" || response == "t")
+                            if (response == "Y" || response == "y")
                             {
 
-                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter1(boatDictionary[person]));
-                                Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
+                                //BoatsRacing.converter1(personboat);
+                                LoadFullSQL.SQLaddnewracer(personboat, BoatsRacing.converter1(personboat));
                                 Console.ReadLine();
-                                // Create a file to write to.
-                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
-                                {
-                                    sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
-                                        raceDictionary[person].boatName,
-                                        raceDictionary[person].boatNumber);
-                                }
+
                                 break;
 
                             }
-                            else if (boatDictionary[person].noOfBoats == 1)
+                            else if (personboat.noOfBoats == 1)
                             {
-                                Boats.Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile.loadFullFile(path);
+                                LoadFullSQL.AddBoat(personboat);
                             }
                         }
-                        if (boatDictionary[person].noOfBoats > 1)
+                        if (personboat.noOfBoats > 1)
                         {
-                            Console.WriteLine("Is your boat a(n) {0}, T/F?", boatDictionary[person].boat2);
+                            Console.WriteLine("Is your boat a(n) {0}, Y/N?", personboat.boat2);
                             string response = Console.ReadLine();
-                            if (response == "T" || response == "t")
+                            if (response == "Y" || response == "y")
                             {
-                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter2(boatDictionary[person]));
-                                Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
+
+                                LoadFullSQL.SQLaddnewracer(personboat, BoatsRacing.converter1(personboat));
                                 Console.ReadLine();
-                                // Create a file to write to.
-                                string[] lines = System.IO.File.ReadAllLines(path);
-                                int thing = Array.IndexOf(lines, person);
-                                Console.WriteLine(thing);
-
-
-                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
-                                {
-
-                                    sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
-                                        raceDictionary[person].boatName,
-                                        raceDictionary[person].boatNumber);
-                                }
                                 break;
 
                             }
-                            else if (boatDictionary[person].noOfBoats == 2)
+                            else if (personboat.noOfBoats == 2)
                             {
-                                Boats.Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile.loadFullFile(path);
+                                LoadFullSQL.AddBoat(personboat);
                             }
                         }
-                        if (boatDictionary[person].noOfBoats > 2)
+                        if (personboat.noOfBoats > 2)
                         {
-                            Console.WriteLine("Is your boat a(n) {0}, T/F?", boatDictionary[person].boat3);
+                            Console.WriteLine("Is your boat a(n) {0}, Y/N?", personboat.boat3);
                             string response = Console.ReadLine();
-                            if (response == "T" || response == "t")
+                            if (response == "Y" || response == "y")
                             {
-                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter3(boatDictionary[person]));
-                                Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
+
+                                LoadFullSQL.SQLaddnewracer(personboat, BoatsRacing.converter1(personboat));
                                 Console.ReadLine();
-                                // Create a file to write to.
-                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
-                                {
-                                    sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
-                                        raceDictionary[person].boatName,
-                                        raceDictionary[person].boatNumber);
-                                }
                                 break;
 
                             }
-                            else if (boatDictionary[person].noOfBoats == 3)
+                            else if (personboat.noOfBoats == 3)
                             {
-                                Boats.Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile.loadFullFile(path);
+                                LoadFullSQL.AddBoat(personboat);
                             }
                         }
-                        if (boatDictionary[person].noOfBoats > 3)
+                        if (personboat.noOfBoats > 3)
                         {
-                            Console.WriteLine("Is your boat a(n) {0}, T/F?", boatDictionary[person].boat4);
+                            Console.WriteLine("Is your boat a(n) {0}, Y/N?", personboat.boat4);
                             string response = Console.ReadLine();
-                            if (response == "T" || response == "t")
+                            if (response == "Y" || response == "y")
                             {
-                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter4(boatDictionary[person]));
-                                Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + raceDictionary[person].boatName);
+
+                                LoadFullSQL.SQLaddnewracer(personboat, BoatsRacing.converter1(personboat));
                                 Console.ReadLine();
-                                // Create a file to write to.
-                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
-                                {
-                                    sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
-                                        raceDictionary[person].boatName,
-                                        raceDictionary[person].boatNumber);
-                                }
                                 break;
 
                             }
-                            else if (boatDictionary[person].noOfBoats == 4)
+                            else if (personboat.noOfBoats == 4)
                             {
-                                Boats.Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile.loadFullFile(path);
+                                LoadFullSQL.AddBoat(personboat);
                             }
-
                         }
-                        if (boatDictionary[person].noOfBoats > 4)
+                        if (personboat.noOfBoats > 4)
                         {
-                            Console.WriteLine("Is your boat a(n) {0}, T/F?", boatDictionary[person].boat5);
+                            Console.WriteLine("Is your boat a(n) {0}, Y/N?", personboat.boat5);
                             string response = Console.ReadLine();
-                            if (response == "T" || response == "t")
+                            if (response == "Y" || response == "y")
                             {
-                                raceDictionary.Add(boatDictionary[person].name, BoatsRacing.converter5(boatDictionary[person]));
-                                Console.WriteLine(raceDictionary[person].name + " is racing a(n) " + 
-                                    raceDictionary[person].boatName);
+
+                                LoadFullSQL.SQLaddnewracer(personboat, BoatsRacing.converter1(personboat));
                                 Console.ReadLine();
-                                // Create a file to write to.
-                                using (StreamWriter sw = System.IO.File.AppendText(@path + @"\Race List.txt"))
-                                {
-                                    sw.WriteLine("{0}, {1}, {2}", raceDictionary[person].name,
-                                        raceDictionary[person].boatName,
-                                        raceDictionary[person].boatNumber);
-                                }
                                 break;
 
-
                             }
-                            else if (boatDictionary[person].noOfBoats == 5)
+                            else if (personboat.noOfBoats == 5)
                             {
-                                Boats.Addboats(response, path, person, boatDictionary);
-                                boatDictionary = LoadFullFile.loadFullFile(path);
+                                LoadFullSQL.AddBoat(personboat);
                             }
-
                         }
                         Console.Clear();
+                        personboat = db1.GetBoat(person);
                     }
                 }
 
                 catch (KeyNotFoundException)
                 {
 
-                    Console.WriteLine("Your name, " + person + ", is not in my records, would you like to add it?(y/n)");
-                    string response = Console.ReadLine();
-                    if (string.Equals(response, "y"))
-                    {
-                        Console.WriteLine("Please re-enter your name, capitalised how you want it.");
-                        string name = Console.ReadLine();
-                        Console.WriteLine("Please enter the number of boats you have.");
-                        int noOfBoats = int.Parse(Console.ReadLine());
-                        for (int i = 0; i < noOfBoats; i++)
-                        {
-                            Console.WriteLine("Enter the name of boat {0}", i);
-                            string boat = Console.ReadLine();
-                            Console.Write("Enter the boat number of boat {0}", i);
-                            int boatNumber = int.Parse(Console.ReadLine());
-                            using (StreamWriter file =
-    new StreamWriter(@"c:\temp\Full List.txt", true))
-                            {
-                                file.WriteLine("{0}\t{1}\t{2}", name, boatNumber, boat);
-                                //LoadFullSQL.AddPerson()
-
-                            }
-
-
-                        }
-                    }
+                    
                 }
                 //Dictionary<string, Boats> nothing = new Dictionary<string, Boats>();
-                boatDictionary = LoadFullFile.loadFullFile(path);
+                //boatDictionary = LoadFullFile.loadFullFile(path);
                 //string hi2 = LoadFullFile();
                 Console.Clear();
+                Console.WriteLine("Escape, Y/N?");
+                if (Console.ReadLine() == "y" || Console.ReadLine() == "Y")
+                    break;
+
             }
+            foreach (var item in raceList)
+                {
+                Console.WriteLine("Name = {0}, BoatName = {1}, BoatNumber = {2}", item.name, item.boatName, item.boatNumber);
+            }
+            Console.ReadLine();
+            /*
+            Console.WriteLine("Would you like to remove a boat?");
+            if (Console.ReadLine() == "y" || Console.ReadLine() == "Y") 
+            {
+                LoadFullSQL.SQLremoveboat()
+            }
+            */
 
         }
     }

@@ -12,7 +12,10 @@ namespace Sailing2
         public string name { get; set; }
         public string boatName { get; set; }
         public int boatNumber { get; set; }
+        public BoatsRacing()
+        {
 
+        }
         public BoatsRacing(string Name, string Boat, int BoatNumber)
         {
             name = Name;

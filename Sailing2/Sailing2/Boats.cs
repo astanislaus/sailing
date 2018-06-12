@@ -22,6 +22,10 @@ namespace Sailing2
         public string boat5 { get; set; }
         public int boatNumber5 { get; set; }
 
+        public Boats()
+        {
+
+        }
         public Boats(string Name, string Boat1, int BoatNumber1)
         {
             name = Name;
