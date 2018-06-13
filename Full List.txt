@@ -1,4 +1,3 @@
-This is the Full list file
 A Robinson	4649	Feva XL
 A Robinson	137388	Radial
 Adrian Stanislaus	926	Laser Stratos
@@ -54,10 +53,4 @@ Steve Ashford	6811	Albacore
 Steve Marlow	113981	Laser
 Struan McDonald	258	Vareo
 W BURGESS	174465	Laser
-Wolly Merchant	12345	Q'ba
-Adrian Stanislaus	162872	Laser
-Luke Stanislaus	927	Laser Stratos
-Test Name	10242	Testboatname
-testname2	523432	boatname2
-testname3	13525	testboat3
-Adrian Stanislaus	35435	Otherboat
+Wolly Merchant	123456	Q ba
